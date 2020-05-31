@@ -1,5 +1,5 @@
 # work-netflowtimedifference
-Calculate difference between NetFlow v9 and IPFIX flowStartMilliseconds values for flows generated for same customer traffic payload, flow#1 for pre- and flow2 for post- Source NAT.
+Calculate difference between NetFlow v9 and IPFIX flowStartMilliseconds values for flows generated for same customer traffic payload, one flow for pre- and another flow for post- Source NAT.
 
 The idea is to check the delta between flowStartMilliseconds (Source: https://www.iana.org/assignments/ipfix/ipfix.xhtml) of pre- and post- NAT traffic flows to determine if NF/IPFIX exporters are in sync.  
 From the beginning we should settle what defines two flows as common/identical and given the only aspect known is we’re handling pre- and post- CGNAT 5-tuple flows, I can only assume the NAT imposed is Source NAT so the source socket will get changed between the two 5-tuple IP sessions. To this we add the NF ODID, a 1:1 mapping between pre-CGNAT VLAN 310 traffic and the exporter, with 320 for post-CGNAT traffic respectively. And we can also expect the NF exporter-identified L7 applications to be the same, given that same app signatures are used.
